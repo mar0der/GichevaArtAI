@@ -40,7 +40,17 @@ export const Header = () => {
                 About
               </Link>
               <Link 
-                href="/shop" 
+                href="/social-media"
+                className={`inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium ${
+                  pathname === '/social-media'
+                    ? 'border-accent text-primary-900'
+                    : 'border-transparent text-primary-500 hover:text-primary-700 hover:border-primary-300'
+                }`}
+              >
+                Social Media
+              </Link>
+              <Link 
+                href="/shop"
                 className={`inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium ${
                   pathname === '/shop'
                     ? 'border-accent text-primary-900'
@@ -50,7 +60,7 @@ export const Header = () => {
                 Shop
               </Link>
               <Link 
-                href="/contact" 
+                href="/contact"
                 className={`inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium ${
                   pathname === '/contact'
                     ? 'border-accent text-primary-900'
@@ -113,7 +123,17 @@ export const Header = () => {
               About
             </Link>
             <Link 
-              href="/shop" 
+              href="/social-media"
+              className={`block pl-3 pr-4 py-2 border-l-4 text-base font-medium ${
+                pathname === '/social-media'
+                  ? 'border-accent text-primary-900 bg-primary-50'
+                  : 'border-transparent text-primary-500 hover:text-primary-700 hover:bg-primary-50 hover:border-primary-300'
+              }`}
+            >
+              Social Media
+            </Link>
+            <Link 
+              href="/shop"
               className={`block pl-3 pr-4 py-2 border-l-4 text-base font-medium ${
                 pathname === '/shop'
                   ? 'border-accent text-primary-900 bg-primary-50'
@@ -123,7 +143,7 @@ export const Header = () => {
               Shop
             </Link>
             <Link 
-              href="/contact" 
+              href="/contact"
               className={`block pl-3 pr-4 py-2 border-l-4 text-base font-medium ${
                 pathname === '/contact'
                   ? 'border-accent text-primary-900 bg-primary-50'
@@ -131,9 +151,6 @@ export const Header = () => {
               }`}
             >
               Contact
-            </Link>
-            <Link href="/cart" className="block pl-3 pr-4 py-2 border-l-4 border-transparent text-base font-medium text-primary-500 hover:text-primary-700 hover:bg-primary-50 hover:border-primary-300">
-              Cart
             </Link>
           </div>
         </div>
