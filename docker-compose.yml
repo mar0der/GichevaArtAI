@@ -1,0 +1,40 @@
+version: '3.8'
+ 
+services:
+  gichevaartai:
+    container_name: GichevaArtAI
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    ports:
+      - "3000:3000"  # Next.js frontend
+      - "5000:5000"  # Flask API
+    volumes:
+      - ./frontend:/app/frontend  # Mount frontend code for development
+      - ./backend:/app/backend    # Mount backend code for development
+      - uploads:/app/uploads
+    environment:
+      - NODE_ENV=development
+      - MONGODB_URI=mongodb://mongodb:27017/gichevaart
+      - FLASK_ENV=development
+      - FLASK_APP=/app/backend/app.py
+      - NEXT_PUBLIC_API_URL=http://localhost:5000
+      - WATCHPACK_POLLING=true    # Enable file watching on mounted volumes
+    depends_on:
+      - mongodb
+    restart: unless-stopped
+
+  mongodb:
+    image: mongo:6.0
+    container_name: GichevaArtAI-MongoDB
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+    restart: unless-stopped
+
+volumes:
+  mongodb_data:
+    driver: local
+  uploads:
+    driver: local
