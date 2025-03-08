@@ -22,11 +22,11 @@ export default function About() {
           
           <div className="md:w-2/3">
             <h2 className="text-2xl font-semibold text-primary-800 mb-4">Radka Gicheva</h2>
-            <p className="text-primary-700 mb-4">Contemporary Fine Artist | b. 1985, Sofia, Bulgaria</p>
+            <p className="text-primary-700 mb-4">Contemporary Fine Artist | b. June 1, 1986, Plovdiv, Bulgaria</p>
             
             <div className="prose prose-primary max-w-none">
               <p className="mb-4">
-                Radka Gicheva is a contemporary artist whose work explores the intersection of traditional techniques and modern expression. Born and raised in Sofia, Bulgaria, she developed a passion for art at an early age, inspired by the rich cultural heritage of Eastern Europe and the dramatic landscapes of her homeland.
+                Radka Gicheva is a contemporary artist whose work explores the intersection of traditional techniques and modern expression. Born and raised in Plovdiv, Bulgaria, she developed a passion for art at an early age, inspired by the rich cultural heritage of Eastern Europe and the dramatic landscapes of her homeland.
               </p>
               <p className="mb-4">
                 After completing her formal education at the National Academy of Arts in Sofia, Radka traveled extensively throughout Europe, absorbing diverse artistic influences and refining her unique style. Her work is characterized by bold color palettes, dynamic compositions, and a distinctive blend of abstract and figurative elements.
