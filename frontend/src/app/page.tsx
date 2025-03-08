@@ -32,6 +32,12 @@ export default function Home() {
               <p className="text-primary-700">Category</p>
               <p className="mt-2">$XXX.XX</p>
             </div>
+            <div className="bg-primary-100 p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow">
+              <div className="h-48 bg-primary-200 rounded-md mb-4"></div>
+              <h2 className="text-xl font-semibold">Mountain Sunrise</h2>
+              <p className="text-primary-700">Landscape</p>
+              <p className="mt-2">$1,200.00</p>
+            </div>
           </div>
         </main>
       </div>
