@@ -2,9 +2,11 @@
 
 import Link from 'next/link';
 import { useState } from 'react';
+import { usePathname } from 'next/navigation';
 
 export const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const pathname = usePathname();
 
   return (
     <header className="bg-white shadow-sm">
@@ -17,16 +19,44 @@ export const Header = () => {
               </Link>
             </div>
             <nav className="hidden sm:ml-6 sm:flex sm:space-x-8">
-              <Link href="/" className="inline-flex items-center px-1 pt-1 border-b-2 border-accent text-sm font-medium text-primary-900">
+              <Link 
+                href="/" 
+                className={`inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium ${
+                  pathname === '/' 
+                    ? 'border-accent text-primary-900'
+                    : 'border-transparent text-primary-500 hover:text-primary-700 hover:border-primary-300'
+                }`}
+              >
                 Gallery
               </Link>
-              <Link href="/about" className="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-primary-500 hover:text-primary-700 hover:border-primary-300">
+              <Link 
+                href="/about" 
+                className={`inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium ${
+                  pathname === '/about'
+                    ? 'border-accent text-primary-900'
+                    : 'border-transparent text-primary-500 hover:text-primary-700 hover:border-primary-300'
+                }`}
+              >
                 About
               </Link>
-              <Link href="/shop" className="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-primary-500 hover:text-primary-700 hover:border-primary-300">
+              <Link 
+                href="/shop" 
+                className={`inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium ${
+                  pathname === '/shop'
+                    ? 'border-accent text-primary-900'
+                    : 'border-transparent text-primary-500 hover:text-primary-700 hover:border-primary-300'
+                }`}
+              >
                 Shop
               </Link>
-              <Link href="/contact" className="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-primary-500 hover:text-primary-700 hover:border-primary-300">
+              <Link 
+                href="/contact" 
+                className={`inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium ${
+                  pathname === '/contact'
+                    ? 'border-accent text-primary-900'
+                    : 'border-transparent text-primary-500 hover:text-primary-700 hover:border-primary-300'
+                }`}
+              >
                 Contact
               </Link>
             </nav>
@@ -62,16 +92,44 @@ export const Header = () => {
       {isMenuOpen && (
         <div className="sm:hidden">
           <div className="pt-2 pb-3 space-y-1">
-            <Link href="/" className="block pl-3 pr-4 py-2 border-l-4 border-accent text-base font-medium text-primary-900 bg-primary-50">
+            <Link 
+              href="/" 
+              className={`block pl-3 pr-4 py-2 border-l-4 text-base font-medium ${
+                pathname === '/'
+                  ? 'border-accent text-primary-900 bg-primary-50'
+                  : 'border-transparent text-primary-500 hover:text-primary-700 hover:bg-primary-50 hover:border-primary-300'
+              }`}
+            >
               Gallery
             </Link>
-            <Link href="/about" className="block pl-3 pr-4 py-2 border-l-4 border-transparent text-base font-medium text-primary-500 hover:text-primary-700 hover:bg-primary-50 hover:border-primary-300">
+            <Link 
+              href="/about" 
+              className={`block pl-3 pr-4 py-2 border-l-4 text-base font-medium ${
+                pathname === '/about'
+                  ? 'border-accent text-primary-900 bg-primary-50'
+                  : 'border-transparent text-primary-500 hover:text-primary-700 hover:bg-primary-50 hover:border-primary-300'
+              }`}
+            >
               About
             </Link>
-            <Link href="/shop" className="block pl-3 pr-4 py-2 border-l-4 border-transparent text-base font-medium text-primary-500 hover:text-primary-700 hover:bg-primary-50 hover:border-primary-300">
+            <Link 
+              href="/shop" 
+              className={`block pl-3 pr-4 py-2 border-l-4 text-base font-medium ${
+                pathname === '/shop'
+                  ? 'border-accent text-primary-900 bg-primary-50'
+                  : 'border-transparent text-primary-500 hover:text-primary-700 hover:bg-primary-50 hover:border-primary-300'
+              }`}
+            >
               Shop
             </Link>
-            <Link href="/contact" className="block pl-3 pr-4 py-2 border-l-4 border-transparent text-base font-medium text-primary-500 hover:text-primary-700 hover:bg-primary-50 hover:border-primary-300">
+            <Link 
+              href="/contact" 
+              className={`block pl-3 pr-4 py-2 border-l-4 text-base font-medium ${
+                pathname === '/contact'
+                  ? 'border-accent text-primary-900 bg-primary-50'
+                  : 'border-transparent text-primary-500 hover:text-primary-700 hover:bg-primary-50 hover:border-primary-300'
+              }`}
+            >
               Contact
             </Link>
             <Link href="/cart" className="block pl-3 pr-4 py-2 border-l-4 border-transparent text-base font-medium text-primary-500 hover:text-primary-700 hover:bg-primary-50 hover:border-primary-300">
