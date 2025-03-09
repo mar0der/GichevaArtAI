@@ -1,0 +1,11 @@
+{
+    "mcpServers": {
+      "mongodb": {
+        "command": "node",
+        "args": [
+          "~/mcp-mongo-server/build/index.js",
+          "mongodb://localhost:27017/gichevaart"
+        ]
+      }
+    }
+  }
