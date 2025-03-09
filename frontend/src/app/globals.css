@@ -10,4 +10,30 @@
 body {
   color: rgb(var(--foreground-rgb));
   background: rgb(var(--background-rgb));
+  font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-playfair), ui-serif, Georgia, serif;
+}
+
+/* Custom tab styles to exactly match the design */
+.tabs-underline .tab {
+  position: relative;
+  transition: color 0.2s;
+  padding-bottom: 0.5rem;
+}
+
+.tabs-underline .tab[aria-selected="true"] {
+  position: relative;
+}
+
+.tabs-underline .tab[aria-selected="true"]::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background-color: rgb(17, 24, 39);
 }
