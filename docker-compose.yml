@@ -18,6 +18,9 @@ services:
       - MONGODB_URI=mongodb://mongodb:27017/gichevaart
       - FLASK_ENV=development
       - FLASK_APP=/app/backend/app.py
+      # For server-side rendering in Next.js, use backend service name
+      - API_URL=http://localhost:5000
+      # For client-side requests from browser, use host machine's URL
       - NEXT_PUBLIC_API_URL=http://localhost:5000
       - WATCHPACK_POLLING=true    # Enable file watching on mounted volumes
     depends_on:

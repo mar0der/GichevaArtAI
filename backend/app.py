@@ -5,7 +5,8 @@ from pymongo import MongoClient
 import json
 
 app = Flask(__name__)
-CORS(app)
+# Make CORS completely permissive for troubleshooting
+CORS(app, origins="*", allow_headers=["*"], supports_credentials=True)
 
 # Connect to MongoDB
 mongo_uri = os.environ.get('MONGODB_URI', 'mongodb://localhost:27017/gichevaart')
