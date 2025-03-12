@@ -1,9 +1,11 @@
 'use client';
-import { Header } from '@/components/header';
-import ErrorDisplay from '../components/ErrorDisplay';
+import { Header } from '@/components/layout/Header';
+import ErrorDisplay from '@/components/common/ErrorDisplay';
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { usePaintingsContext } from '@/lib/context/PaintingsContext';
+import { tailwindClasses as tc, cn } from '@/lib/utils/tailwind-classes';
 
 // Types for our painting data
 interface Painting {
@@ -22,80 +24,35 @@ interface Painting {
 
 // Client component for the gallery
 export default function Home() {
-  const [paintings, setPaintings] = useState<Painting[]>([]);
-  const [filteredPaintings, setFilteredPaintings] = useState<Painting[]>([]);
-  const [categories, setCategories] = useState<string[]>([]);
-  const [selectedCategory, setSelectedCategory] = useState<string>('');
-  const [availableOnly, setAvailableOnly] = useState<boolean>(false);
-  const [sortOption, setSortOption] = useState<string>('title');
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-
+  const [mounted, setMounted] = useState(false);
+  
   useEffect(() => {
-    async function fetchPaintings() {
-      try {
-        setIsLoading(true);
-        const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
-        console.log('Fetching from API (client-side):', apiUrl);
-        
-        // Client-side request with timestamp for cache busting
-        const timestamp = new Date().getTime();
-        const res = await fetch(`${apiUrl}/api/paintings?t=${timestamp}`, {
-          cache: 'no-store',
-          headers: { 'Accept': 'application/json' }
-        });
-        
-        if (!res.ok) {
-          throw new Error(`API request failed with status ${res.status}`);
-        }
-        
-        const data = await res.json();
-        console.log('Successfully fetched data from API');
-        setPaintings(data);
-        setFilteredPaintings(data);
-        
-        // Extract unique categories from paintings
-        const uniqueCategories = Array.from(new Set(data.map((painting: Painting) => painting.category))).filter(Boolean);
-        setCategories(uniqueCategories as string[]);
-        
-        setError(null);
-      } catch (error) {
-        console.error('Fetch error:', error);
-        setError(error instanceof Error ? error.message : 'Failed to fetch paintings');
-      } finally {
-        setIsLoading(false);
-      }
-    }
-
-    fetchPaintings();
+    setMounted(true);
   }, []);
 
-  // Filter and sort paintings when filter options change
-  useEffect(() => {
-    let result = [...paintings];
-    
-    // Apply category filter
-    if (selectedCategory) {
-      result = result.filter(painting => painting.category === selectedCategory);
-    }
-    
-    // Apply availability filter
-    if (availableOnly) {
-      result = result.filter(painting => painting.available);
-    }
-    
-    // Apply sorting
-    if (sortOption === 'price_asc') {
-      result.sort((a, b) => (a.price || 0) - (b.price || 0));
-    } else if (sortOption === 'price_desc') {
-      result.sort((a, b) => (b.price || 0) - (a.price || 0));
-    } else {
-      // Default: sort by title
-      result.sort((a, b) => a.title.localeCompare(b.title));
-    }
-    
-    setFilteredPaintings(result);
-  }, [paintings, selectedCategory, availableOnly, sortOption]);
+  // Use the context
+  const { 
+    paintings, 
+    filteredPaintings, 
+    categories, 
+    isLoading, 
+    error, 
+    filters, 
+    setFilter 
+  } = usePaintingsContext();
+
+  // Early return during server-side rendering or before mounting
+  if (!mounted) {
+    return (
+      <>
+        <Header />
+        <div className="flex flex-col items-center justify-center min-h-screen">
+          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-accent"></div>
+          <p className="mt-4 text-gray-600">Loading gallery...</p>
+        </div>
+      </>
+    );
+  }
 
   if (isLoading) {
     return (
@@ -155,8 +112,8 @@ export default function Home() {
                   </label>
                   <select
                     id="category-filter"
-                    value={selectedCategory}
-                    onChange={(e) => setSelectedCategory(e.target.value)}
+                    value={filters.category}
+                    onChange={(e) => setFilter('category', e.target.value)}
                     className="block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-accent focus:border-accent"
                   >
                     <option value="">All Categories</option>
@@ -174,13 +131,13 @@ export default function Home() {
                   </label>
                   <select
                     id="sort-option"
-                    value={sortOption}
-                    onChange={(e) => setSortOption(e.target.value)}
+                    value={filters.sortOption}
+                    onChange={(e) => setFilter('sortOption', e.target.value)}
                     className="block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-accent focus:border-accent"
                   >
                     <option value="title">Title (A-Z)</option>
-                    <option value="price_asc">Price (Low to High)</option>
-                    <option value="price_desc">Price (High to Low)</option>
+                    <option value="priceAsc">Price (Low to High)</option>
+                    <option value="priceDesc">Price (High to Low)</option>
                   </select>
                 </div>
               </div>
@@ -189,8 +146,8 @@ export default function Home() {
                 <input
                   id="available-only"
                   type="checkbox"
-                  checked={availableOnly}
-                  onChange={(e) => setAvailableOnly(e.target.checked)}
+                  checked={filters.availableOnly}
+                  onChange={(e) => setFilter('availableOnly', e.target.checked)}
                   className="h-4 w-4 text-accent focus:ring-accent border-gray-300 rounded"
                 />
                 <label htmlFor="available-only" className="ml-2 block text-sm text-gray-700">
@@ -209,9 +166,9 @@ export default function Home() {
               <p className="text-xl text-gray-600">No paintings match your current filters.</p>
               <button 
                 onClick={() => {
-                  setSelectedCategory('');
-                  setAvailableOnly(false);
-                  setSortOption('title');
+                  setFilter('category', '');
+                  setFilter('availableOnly', false);
+                  setFilter('sortOption', 'title');
                 }}
                 className="mt-4 px-4 py-2 bg-accent text-white rounded hover:bg-accent/90"
               >

@@ -7,6 +7,7 @@ export interface Painting {
   medium: string;
   category: string;
   imageUrl: string;
+  saatchiLink?: string;
   available: boolean;
   createdAt: string;
 }

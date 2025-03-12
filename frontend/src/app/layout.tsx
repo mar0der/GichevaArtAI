@@ -1,6 +1,8 @@
 import type { Metadata } from 'next'
 import { Inter, Playfair_Display } from 'next/font/google'
 import './globals.css'
+import ErrorBoundary from '@/components/common/ErrorBoundary'
+import { PaintingsProvider } from '@/lib/context/PaintingsContext'
 
 const inter = Inter({
   subsets: ['latin'],
@@ -27,9 +29,13 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} ${playfair.variable}`}>
       <body className="font-sans">
-        <main className="min-h-screen">
-          {children}
-        </main>
+        <ErrorBoundary>
+          <PaintingsProvider>
+            <main className="min-h-screen">
+              {children}
+            </main>
+          </PaintingsProvider>
+        </ErrorBoundary>
       </body>
     </html>
   )

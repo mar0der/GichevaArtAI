@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect } from 'react';
-import { Header } from '@/components/header';
+import { Header } from '@components/layout/Header';
 import Image from 'next/image';
 
 export default function SocialMedia() {

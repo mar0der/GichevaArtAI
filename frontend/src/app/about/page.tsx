@@ -2,12 +2,16 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
-import { Header } from '@/components/header';
+import { Header } from '@components/layout/Header';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Timeline, TimelineItem } from '@/components/timeline';
+import { Timeline } from '@/components/timeline';
+import { tailwindClasses as tc, cn } from '@/lib/utils/tailwind-classes';
+
+// Import the original TimelineItem to keep compatibility
+import { TimelineItem } from '@/components/timeline';
 
 export default function About() {
   // State to track if we're showing all exhibitions
