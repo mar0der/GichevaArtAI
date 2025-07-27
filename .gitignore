@@ -146,6 +146,11 @@ data/db/
 .DS_Store
 Thumbs.db
 
+# Claude-specific files
+CLAUDE.md
+claude.md
+.claude/
+
 # Uploads
 uploads/
 
